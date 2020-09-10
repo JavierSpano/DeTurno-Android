@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "921026625328",
+    "firebase_url": "https://deturno-89c42.firebaseio.com",
+    "project_id": "deturno-89c42",
+    "storage_bucket": "deturno-89c42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921026625328:android:ddfb41d6528517b5e892f5",
+        "android_client_info": {
+          "package_name": "com.javierfspano.deturno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921026625328-mk63v0aabef74l0oou66fqvnu41p1cgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0UR5wQgbmbdLvOTTfVsgd9-gYVC3ce7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921026625328-mk63v0aabef74l0oou66fqvnu41p1cgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
