@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -64,7 +65,7 @@ public class MainPresenterTest {
         when(pharmacy.getLng()).thenReturn(randomLatOrLong);
 
         mainPresenter.onMapReady();
-        verify(getPharmacyListUseCase).execute(callbackArgumentCaptor.capture());
+        verify(getPharmacyListUseCase).execute(any(), callbackArgumentCaptor.capture());
         callbackArgumentCaptor.getValue().onSuccess(pharmacyServiceResponse);
         verify(view).addMarker(any(MarkerOptions.class));
     }
@@ -79,7 +80,7 @@ public class MainPresenterTest {
         when(pharmacy.getLat()).thenReturn(randomLatOrLong);
         when(pharmacy.getLng()).thenReturn(randomLatOrLong);
         mainPresenter.onMapReady();
-        verify(getPharmacyListUseCase).execute(callbackArgumentCaptor.capture());
+        verify(getPharmacyListUseCase).execute(any(), callbackArgumentCaptor.capture());
         callbackArgumentCaptor.getValue().onSuccess(pharmacyServiceResponse);
         verify(view).centerMap(any(LatLng.class));
     }
