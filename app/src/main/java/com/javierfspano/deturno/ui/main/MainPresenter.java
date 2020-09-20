@@ -1,12 +1,12 @@
-package com.javierfspano.deturno.ui;
+package com.javierfspano.deturno.ui.main;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.javierfspano.deturno.base.BasePresenter;
 import com.javierfspano.deturno.data.Coordinates;
 import com.javierfspano.deturno.data.Pharmacy;
 import com.javierfspano.deturno.data.PharmacyServiceResponse;
 import com.javierfspano.deturno.domain.GetPharmacyListUseCase;
+import com.javierfspano.deturno.ui.base.BasePresenter;
 import com.javierfspano.deturno.util.GenericServiceCallback;
 
 import java.util.List;
@@ -15,13 +15,15 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
     private GetPharmacyListUseCase getPharmacyListUseCase;
 
+    private String idToken;
+
     public MainPresenter(GetPharmacyListUseCase getPharmacyListUseCase) {
         this.getPharmacyListUseCase = getPharmacyListUseCase;
     }
 
     public void onMapReady() {
 
-        getPharmacyListUseCase.getPharmacies(new GenericServiceCallback<PharmacyServiceResponse>() {
+        getPharmacyListUseCase.execute(idToken, new GenericServiceCallback<PharmacyServiceResponse>() {
 
             @Override
             public void onSuccess(PharmacyServiceResponse pharmacyServiceResponse) {
@@ -47,5 +49,10 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                 view.showErrorMessage();
             }
         });
+    }
+
+    @Override
+    public void onCreate(String idToken) {
+        this.idToken = idToken;
     }
 }

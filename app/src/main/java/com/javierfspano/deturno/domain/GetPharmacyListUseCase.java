@@ -13,7 +13,7 @@ public class GetPharmacyListUseCase {
         this.pharmacyRepository = pharmacyRepository;
     }
 
-    public void getPharmacies(final GenericServiceCallback<PharmacyServiceResponse> callback) {
-        pharmacyRepository.getPharmacies(callback);
+    public void execute(String idToken, final GenericServiceCallback<PharmacyServiceResponse> callback) {
+        pharmacyRepository.getPharmacies(idToken, callback);
     }
 }

@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'dagger.hilt.android.plugin'
-
+apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
@@ -20,12 +20,12 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "API_URL", "\"https://fdt-walking-skeleton.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://deturno-backend.herokuapp.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "API_URL", "\"https://fdt-walking-skeleton.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://deturno-backend.herokuapp.com/\""
         }
     }
 
@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.firebase:geofire-android:3.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

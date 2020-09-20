@@ -1,8 +1,8 @@
-package com.javierfspano.deturno.ui;
+package com.javierfspano.deturno.ui.main;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.javierfspano.deturno.base.BaseContract;
+import com.javierfspano.deturno.ui.base.BaseContract;
 
 public interface MainContract {
 
@@ -15,6 +15,9 @@ public interface MainContract {
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
+
         void onMapReady();
+
+        void onCreate(String stringExtra);
     }
 }

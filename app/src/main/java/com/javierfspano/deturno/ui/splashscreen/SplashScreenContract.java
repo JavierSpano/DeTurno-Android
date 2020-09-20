@@ -1,0 +1,20 @@
+package com.javierfspano.deturno.ui.splashscreen;
+
+import com.javierfspano.deturno.ui.base.BaseContract;
+
+public interface SplashScreenContract {
+
+    interface View extends BaseContract.BaseView {
+
+        void goToMainActivity(String idToken);
+
+        void showTokenError();
+    }
+
+    interface Presenter extends BaseContract.BasePresenter<View> {
+
+        void onCreate();
+
+        void onRetry();
+    }
+}

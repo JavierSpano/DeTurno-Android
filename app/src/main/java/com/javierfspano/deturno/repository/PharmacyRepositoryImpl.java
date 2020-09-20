@@ -3,6 +3,8 @@ package com.javierfspano.deturno.repository;
 import androidx.annotation.NonNull;
 
 import com.javierfspano.deturno.data.PharmacyServiceResponse;
+import com.javierfspano.deturno.exception.NullIdTokenException;
+import com.javierfspano.deturno.exception.PharmacyServiceException;
 import com.javierfspano.deturno.service.PharmacyService;
 import com.javierfspano.deturno.util.GenericServiceCallback;
 
@@ -19,12 +21,19 @@ public class PharmacyRepositoryImpl implements PharmacyRepository {
     }
 
     @Override
-    public void getPharmacies(final GenericServiceCallback<PharmacyServiceResponse> callback) {
-
-        service.listPharmacies().enqueue(new Callback<PharmacyServiceResponse>() {
+    public void getPharmacies(String idToken, final GenericServiceCallback<PharmacyServiceResponse> callback) {
+        if (idToken == null) {
+            callback.onError(new NullIdTokenException());
+            return;
+        }
+        service.listPharmacies(idToken).enqueue(new Callback<PharmacyServiceResponse>() {
             @Override
             public void onResponse(@NonNull Call<PharmacyServiceResponse> call, @NonNull Response<PharmacyServiceResponse> response) {
-                callback.onSuccess(response.body());
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                    return;
+                }
+                callback.onError(new PharmacyServiceException(response.errorBody()));
             }
 
             @Override

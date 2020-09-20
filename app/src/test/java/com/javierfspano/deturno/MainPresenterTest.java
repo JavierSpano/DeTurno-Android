@@ -6,8 +6,8 @@ import com.javierfspano.deturno.data.Coordinates;
 import com.javierfspano.deturno.data.Pharmacy;
 import com.javierfspano.deturno.data.PharmacyServiceResponse;
 import com.javierfspano.deturno.domain.GetPharmacyListUseCase;
-import com.javierfspano.deturno.ui.MainContract;
-import com.javierfspano.deturno.ui.MainPresenter;
+import com.javierfspano.deturno.ui.main.MainContract;
+import com.javierfspano.deturno.ui.main.MainPresenter;
 import com.javierfspano.deturno.util.GenericServiceCallback;
 
 import org.junit.Before;
@@ -64,7 +64,7 @@ public class MainPresenterTest {
         when(pharmacy.getLng()).thenReturn(randomLatOrLong);
 
         mainPresenter.onMapReady();
-        verify(getPharmacyListUseCase).getPharmacies(callbackArgumentCaptor.capture());
+        verify(getPharmacyListUseCase).execute(callbackArgumentCaptor.capture());
         callbackArgumentCaptor.getValue().onSuccess(pharmacyServiceResponse);
         verify(view).addMarker(any(MarkerOptions.class));
     }
@@ -79,7 +79,7 @@ public class MainPresenterTest {
         when(pharmacy.getLat()).thenReturn(randomLatOrLong);
         when(pharmacy.getLng()).thenReturn(randomLatOrLong);
         mainPresenter.onMapReady();
-        verify(getPharmacyListUseCase).getPharmacies(callbackArgumentCaptor.capture());
+        verify(getPharmacyListUseCase).execute(callbackArgumentCaptor.capture());
         callbackArgumentCaptor.getValue().onSuccess(pharmacyServiceResponse);
         verify(view).centerMap(any(LatLng.class));
     }

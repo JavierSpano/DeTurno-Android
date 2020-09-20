@@ -1,4 +1,4 @@
-package com.javierfspano.deturno.base;
+package com.javierfspano.deturno.ui.base;
 
 public interface BaseContract {
 

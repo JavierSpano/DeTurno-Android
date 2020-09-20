@@ -1,4 +1,4 @@
-package com.javierfspano.deturno.ui;
+package com.javierfspano.deturno.ui.main;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -20,8 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback, MainContract.View {
 
+    public static final String ID_TOKEN_EXTRA = "IdToken";
+
     @Inject
     MainContract.Presenter presenter;
+    private String idToken;
     private GoogleMap map;
 
     @Override
@@ -29,6 +32,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         presenter.attachView(this);
+        presenter.onCreate(getIntent().getStringExtra(ID_TOKEN_EXTRA));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
