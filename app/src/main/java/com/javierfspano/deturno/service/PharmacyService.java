@@ -11,6 +11,6 @@ import retrofit2.http.Query;
 
 public interface PharmacyService {
     @GET("farmacias_cercanas")
-    Call<PharmacyServiceResponse> listPharmacies(@Header("IdToken") String header,
-                                                 @Nullable @Query("direccion") String direccion);
+    Call<PharmacyServiceResponse> listPharmacies(@Header("IdToken") String idToken,
+                                                 @Query("radio") Float radius, @Nullable @Query("direccion") String direccion);
 }

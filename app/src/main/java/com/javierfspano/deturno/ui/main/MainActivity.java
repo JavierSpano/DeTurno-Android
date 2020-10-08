@@ -5,8 +5,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.slider.Slider;
 import com.javierfspano.deturno.R;
 
 import javax.inject.Inject;
@@ -26,10 +29,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         View.OnClickListener, SearchView.OnCloseListener, SearchView.OnQueryTextListener {
 
     public static final String ID_TOKEN_EXTRA = "IdToken";
-
     @Inject
     MainContract.Presenter presenter;
-
+    private float currentRadiusValue = 0.6f;
     private GoogleMap map;
 
     @Override
@@ -41,8 +43,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        setupSlider();
         setSupportActionBar(findViewById(R.id.toolbar));
+    }
+
+    private void setupSlider() {
+        Slider slider = findViewById(R.id.slider);
+        TextView radiusValueLabel = findViewById(R.id.radiusValue);
+        radiusValueLabel.setText(currentRadiusValue + "km");
+        slider.addOnChangeListener((slider1, value, fromUser) -> radiusValueLabel.setText(value + "km"));
+        slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
+            @Override
+            public void onStartTrackingTouch(@NonNull Slider slider) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(@NonNull Slider slider) {
+                currentRadiusValue = slider.getValue();
+            }
+        });
     }
 
     @Override
@@ -91,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
+    public void clearMapMarkers() {
+        map.clear();
+    }
+
+    @Override
     public void onClick(View v) {
     }
 
@@ -101,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        presenter.onAddressSearch(query);
+        presenter.onAddressSearch(query, currentRadiusValue);
         return false;
     }
 

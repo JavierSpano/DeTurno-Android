@@ -32,6 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(MainActivity.ID_TOKEN_EXTRA, idToken);
         startActivity(intent);
+        finish();
     }
 
     @Override

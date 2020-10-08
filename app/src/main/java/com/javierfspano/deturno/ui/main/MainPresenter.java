@@ -28,9 +28,9 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         view.centerMap(defaultLocation);
     }
 
-    private void fetchNearbyPharmacies(@Nullable String address) {
+    private void fetchNearbyPharmacies(@Nullable String address, float radius) {
         view.showLoading();
-        getPharmacyListUseCase.execute(address, idToken, new GenericServiceCallback<PharmacyServiceResponse>() {
+        getPharmacyListUseCase.execute(address, radius, idToken, new GenericServiceCallback<PharmacyServiceResponse>() {
 
             @Override
             public void onSuccess(PharmacyServiceResponse pharmacyServiceResponse) {
@@ -71,7 +71,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     }
 
     @Override
-    public void onAddressSearch(String address) {
-        fetchNearbyPharmacies(address);
+    public void onAddressSearch(String address, float radius) {
+        view.clearMapMarkers();
+        fetchNearbyPharmacies(address, radius);
     }
 }

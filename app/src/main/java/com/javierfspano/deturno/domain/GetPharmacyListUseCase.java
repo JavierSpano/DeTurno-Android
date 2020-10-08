@@ -15,7 +15,7 @@ public class GetPharmacyListUseCase {
         this.pharmacyRepository = pharmacyRepository;
     }
 
-    public void execute(@Nullable String address, String idToken, final GenericServiceCallback<PharmacyServiceResponse> callback) {
-        pharmacyRepository.getPharmacies(address, idToken, callback);
+    public void execute(@Nullable String address, float radius, String idToken, final GenericServiceCallback<PharmacyServiceResponse> callback) {
+        pharmacyRepository.getPharmacies(address, radius, idToken, callback);
     }
 }

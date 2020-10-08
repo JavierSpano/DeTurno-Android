@@ -7,5 +7,5 @@ import com.javierfspano.deturno.util.GenericServiceCallback;
 
 public interface PharmacyRepository {
 
-    void getPharmacies(@Nullable String address, String idToken, GenericServiceCallback<PharmacyServiceResponse> callback);
+    void getPharmacies(@Nullable String address, float radius, String idToken, GenericServiceCallback<PharmacyServiceResponse> callback);
 }

@@ -16,6 +16,8 @@ public interface MainContract {
         void showLoading();
 
         void hideLoading();
+
+        void clearMapMarkers();
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
@@ -24,6 +26,6 @@ public interface MainContract {
 
         void onCreate(String stringExtra);
 
-        void onAddressSearch(String address);
+        void onAddressSearch(String address, float radius);
     }
 }

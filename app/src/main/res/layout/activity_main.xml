@@ -28,13 +28,46 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:context=".ui.main.MainActivity" />
 
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:stepSize="0.1"
+        android:value="0.6"
+        android:valueFrom="0.1"
+        android:valueTo="0.6"
+        app:layout_constraintEnd_toStartOf="@+id/radiusLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/radiusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/radius_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/radiusValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="@+id/radiusLabel"
+        app:layout_constraintStart_toStartOf="@+id/radiusLabel"
+        app:layout_constraintTop_toBottomOf="@+id/radiusLabel"
+        tools:text="0,6km" />
+
     <FrameLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
         android:background="@android:color/black"
-        tools:visibility="gone">
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/progressBar2"
@@ -44,4 +77,6 @@
             android:layout_gravity="center"
             android:indeterminate="true" />
     </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,12 +22,12 @@ public class PharmacyRepositoryImpl implements PharmacyRepository {
     }
 
     @Override
-    public void getPharmacies(@Nullable String address, String idToken, final GenericServiceCallback<PharmacyServiceResponse> callback) {
+    public void getPharmacies(@Nullable String address, float radius, String idToken, final GenericServiceCallback<PharmacyServiceResponse> callback) {
         if (idToken == null) {
             callback.onError(new NullIdTokenException());
             return;
         }
-        service.listPharmacies(idToken, address).enqueue(new Callback<PharmacyServiceResponse>() {
+        service.listPharmacies(idToken, radius, address).enqueue(new Callback<PharmacyServiceResponse>() {
             @Override
             public void onResponse(@NonNull Call<PharmacyServiceResponse> call, @NonNull Response<PharmacyServiceResponse> response) {
                 if (response.isSuccessful()) {
