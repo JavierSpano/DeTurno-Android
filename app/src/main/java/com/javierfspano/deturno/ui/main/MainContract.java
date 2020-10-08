@@ -12,6 +12,10 @@ public interface MainContract {
         void centerMap(LatLng latLng);
 
         void showErrorMessage();
+
+        void showLoading();
+
+        void hideLoading();
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
@@ -19,5 +23,7 @@ public interface MainContract {
         void onMapReady();
 
         void onCreate(String stringExtra);
+
+        void onAddressSearch(String address);
     }
 }
