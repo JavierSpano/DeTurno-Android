@@ -1,7 +1,10 @@
 package com.javierfspano.deturno.di;
 
 import com.javierfspano.deturno.domain.GetIdTokenUseCase;
-import com.javierfspano.deturno.domain.GetPharmacyListUseCase;
+import com.javierfspano.deturno.domain.GetPharmaciesByCoordinatesUseCase;
+import com.javierfspano.deturno.domain.GetPharmaciesByTextUseCase;
+import com.javierfspano.deturno.ui.locationinput.LocationInputContract;
+import com.javierfspano.deturno.ui.locationinput.LocationInputPresenter;
 import com.javierfspano.deturno.ui.main.MainContract;
 import com.javierfspano.deturno.ui.main.MainPresenter;
 import com.javierfspano.deturno.ui.splashscreen.SplashScreenContract;
@@ -17,12 +20,17 @@ import dagger.hilt.android.components.ActivityComponent;
 public class PresentersModule {
 
     @Provides
-    static MainContract.Presenter provideMainPresenter(GetPharmacyListUseCase getPharmacyListUseCase) {
-        return new MainPresenter(getPharmacyListUseCase);
+    static MainContract.Presenter provideMainPresenter(GetPharmaciesByTextUseCase getPharmaciesByTextUseCase, GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase) {
+        return new MainPresenter(getPharmaciesByTextUseCase, getPharmaciesByCoordinatesUseCase);
     }
 
     @Provides
     static SplashScreenContract.Presenter provideSplashScreenPresenter(GetIdTokenUseCase getIdTokenUseCase) {
         return new SplashScreenPresenter(getIdTokenUseCase);
+    }
+
+    @Provides
+    static LocationInputContract.Presenter provideLocationInputPresenter() {
+        return new LocationInputPresenter();
     }
 }

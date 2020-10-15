@@ -1,5 +1,7 @@
 package com.javierfspano.deturno.ui.splashscreen;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,9 +29,8 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         presenter.onCreate();
     }
 
-    @Override
-    public void goToMainActivity(String idToken) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public void goToNextActivity(String idToken, Class<? extends Activity> activity) {
+        Intent intent = new Intent(this, activity);
         intent.putExtra(MainActivity.ID_TOKEN_EXTRA, idToken);
         startActivity(intent);
         finish();
@@ -45,5 +46,10 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
                     dialogInterface.dismiss();
                 })
                 .show();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

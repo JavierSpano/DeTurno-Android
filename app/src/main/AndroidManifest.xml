@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.splashscreen.SplashScreenActivity"
+        <activity
+            android:name=".ui.locationinput.LocationInputActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:theme="@style/Theme.MaterialComponents.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +32,7 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

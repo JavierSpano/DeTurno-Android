@@ -32,11 +32,12 @@
         android:id="@+id/slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:stepSize="0.1"
         android:value="0.6"
         android:valueFrom="0.1"
         android:valueTo="0.6"
-        app:layout_constraintEnd_toStartOf="@+id/radiusLabel"
+        app:layout_constraintEnd_toStartOf="@+id/radiusValue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -47,17 +48,18 @@
         android:text="@string/radius_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/radiusValue"
+        app:layout_constraintStart_toStartOf="@+id/radiusValue"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/radiusValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="@+id/radiusLabel"
-        app:layout_constraintStart_toStartOf="@+id/radiusLabel"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radiusLabel"
         tools:text="0,6km" />
 

@@ -1,5 +1,7 @@
 package com.javierfspano.deturno.ui.main;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.javierfspano.deturno.ui.base.BaseContract;
@@ -24,8 +26,8 @@ public interface MainContract {
 
         void onMapReady();
 
-        void onCreate(String stringExtra);
-
         void onAddressSearch(String address, float radius);
+
+        void onCreate(String stringExtra, @Nullable LatLng coordinates, String address);
     }
 }

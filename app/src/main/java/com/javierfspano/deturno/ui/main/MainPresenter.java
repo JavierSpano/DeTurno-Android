@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.javierfspano.deturno.R;
 import com.javierfspano.deturno.data.Coordinates;
 import com.javierfspano.deturno.data.Pharmacy;
 import com.javierfspano.deturno.data.PharmacyServiceResponse;
-import com.javierfspano.deturno.domain.GetPharmacyListUseCase;
+import com.javierfspano.deturno.domain.GetPharmaciesByCoordinatesUseCase;
+import com.javierfspano.deturno.domain.GetPharmaciesByTextUseCase;
 import com.javierfspano.deturno.ui.base.BasePresenter;
 import com.javierfspano.deturno.util.GenericServiceCallback;
 
@@ -16,12 +18,14 @@ import java.util.List;
 
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
 
-    private final LatLng defaultLocation = new LatLng(-34.647076, -58.381592);
-    private GetPharmacyListUseCase getPharmacyListUseCase;
+    private final LatLng defaultLocation = new LatLng(-34.603739, -58.38157);
+    private GetPharmaciesByTextUseCase getPharmaciesByTextUseCase;
+    private GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase;
     private String idToken;
 
-    public MainPresenter(GetPharmacyListUseCase getPharmacyListUseCase) {
-        this.getPharmacyListUseCase = getPharmacyListUseCase;
+    public MainPresenter(GetPharmaciesByTextUseCase getPharmaciesByTextUseCase, GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase) {
+        this.getPharmaciesByTextUseCase = getPharmaciesByTextUseCase;
+        this.getPharmaciesByCoordinatesUseCase = getPharmaciesByCoordinatesUseCase;
     }
 
     public void onMapReady() {
@@ -30,7 +34,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
     private void fetchNearbyPharmacies(@Nullable String address, float radius) {
         view.showLoading();
-        getPharmacyListUseCase.execute(address, radius, idToken, new GenericServiceCallback<PharmacyServiceResponse>() {
+        getPharmaciesByTextUseCase.execute(address, radius, idToken, new GenericServiceCallback<PharmacyServiceResponse>() {
 
             @Override
             public void onSuccess(PharmacyServiceResponse pharmacyServiceResponse) {
@@ -65,9 +69,54 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         });
     }
 
+    private void fetchNearbyPharmacies(LatLng latLng) {
+        view.showLoading();
+        getPharmaciesByCoordinatesUseCase.execute(latLng, idToken, new GenericServiceCallback<PharmacyServiceResponse>() {
+
+            @Override
+            public void onSuccess(PharmacyServiceResponse pharmacyServiceResponse) {
+                view.hideLoading();
+                if (pharmacyServiceResponse != null) {
+                    final List<Pharmacy> pharmacies = pharmacyServiceResponse.getPharmacies();
+                    final Coordinates mapCenter = pharmacyServiceResponse.getMapCenter();
+                    if (pharmacies != null) {
+                        for (Pharmacy pharmacy : pharmacies) {
+                            LatLng pharmacyLocation = new LatLng(Double.parseDouble(pharmacy.getLat()), Double.parseDouble(pharmacy.getLng()));
+                            view.addMarker(new MarkerOptions()
+                                    .position(pharmacyLocation)
+                                    .title(pharmacy.getStreetName() + " " + pharmacy.getStreetNumber())
+                                    .snippet(pharmacy.getName()));
+                        }
+                        LatLng latLng = new LatLng(Double.parseDouble(mapCenter.getLat()), Double.parseDouble(mapCenter.getLng()));
+                        view.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(view.getContext().getString(R.string.you_are_here))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                        );
+                        view.centerMap(latLng);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                view.hideLoading();
+                view.showErrorMessage();
+            }
+        });
+    }
+
     @Override
-    public void onCreate(String idToken) {
+    public void onCreate(String idToken, @Nullable LatLng location, String address) {
         this.idToken = idToken;
+
+        if (location != null) {
+            fetchNearbyPharmacies(location);
+        }
+
+        if (address != null) {
+            fetchNearbyPharmacies(address, MainActivity.DEFAULT_RADIUS);
+        }
     }
 
     @Override

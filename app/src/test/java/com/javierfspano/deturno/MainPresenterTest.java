@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.javierfspano.deturno.data.Coordinates;
 import com.javierfspano.deturno.data.Pharmacy;
 import com.javierfspano.deturno.data.PharmacyServiceResponse;
-import com.javierfspano.deturno.domain.GetPharmacyListUseCase;
+import com.javierfspano.deturno.domain.GetPharmaciesByTextUseCase;
 import com.javierfspano.deturno.ui.main.MainContract;
 import com.javierfspano.deturno.ui.main.MainPresenter;
 import com.javierfspano.deturno.util.GenericServiceCallback;
@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -30,7 +29,7 @@ public class MainPresenterTest {
     private ArgumentCaptor<GenericServiceCallback<PharmacyServiceResponse>> callbackArgumentCaptor;
 
     @Mock
-    private GetPharmacyListUseCase getPharmacyListUseCase;
+    private GetPharmaciesByTextUseCase getPharmaciesByTextUseCase;
 
     @Mock
     private PharmacyServiceResponse pharmacyServiceResponse;
@@ -49,7 +48,7 @@ public class MainPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mainPresenter = new MainPresenter(getPharmacyListUseCase);
+        mainPresenter = new MainPresenter(getPharmaciesByTextUseCase);
         mainPresenter.attachView(view);
 
     }
@@ -65,7 +64,7 @@ public class MainPresenterTest {
         when(pharmacy.getLng()).thenReturn(randomLatOrLong);
 
         mainPresenter.onMapReady();
-        verify(getPharmacyListUseCase).execute(any(), callbackArgumentCaptor.capture());
+        verify(getPharmaciesByTextUseCase).execute(any(), callbackArgumentCaptor.capture());
         callbackArgumentCaptor.getValue().onSuccess(pharmacyServiceResponse);
         verify(view).addMarker(any(MarkerOptions.class));
     }
@@ -80,7 +79,7 @@ public class MainPresenterTest {
         when(pharmacy.getLat()).thenReturn(randomLatOrLong);
         when(pharmacy.getLng()).thenReturn(randomLatOrLong);
         mainPresenter.onMapReady();
-        verify(getPharmacyListUseCase).execute(any(), callbackArgumentCaptor.capture());
+        verify(getPharmaciesByTextUseCase).execute(any(), callbackArgumentCaptor.capture());
         callbackArgumentCaptor.getValue().onSuccess(pharmacyServiceResponse);
         verify(view).centerMap(any(LatLng.class));
     }

@@ -2,6 +2,7 @@ package com.javierfspano.deturno.ui.splashscreen;
 
 import com.javierfspano.deturno.domain.GetIdTokenUseCase;
 import com.javierfspano.deturno.ui.base.BasePresenter;
+import com.javierfspano.deturno.ui.locationinput.LocationInputActivity;
 import com.javierfspano.deturno.util.GenericServiceCallback;
 
 public class SplashScreenPresenter extends BasePresenter<SplashScreenContract.View> implements SplashScreenContract.Presenter {
@@ -26,7 +27,7 @@ public class SplashScreenPresenter extends BasePresenter<SplashScreenContract.Vi
         getIdTokenUseCase.execute(new GenericServiceCallback<String>() {
             @Override
             public void onSuccess(String idToken) {
-                view.goToMainActivity(idToken);
+                view.goToNextActivity(idToken, LocationInputActivity.class);
             }
 
             @Override

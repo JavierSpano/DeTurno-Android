@@ -6,12 +6,12 @@ import com.javierfspano.deturno.data.PharmacyServiceResponse;
 import com.javierfspano.deturno.repository.PharmacyRepository;
 import com.javierfspano.deturno.util.GenericServiceCallback;
 
-public class GetPharmacyListUseCase {
+public class GetPharmaciesByTextUseCase {
 
     private PharmacyRepository pharmacyRepository;
 
 
-    public GetPharmacyListUseCase(PharmacyRepository pharmacyRepository) {
+    public GetPharmaciesByTextUseCase(PharmacyRepository pharmacyRepository) {
         this.pharmacyRepository = pharmacyRepository;
     }
 

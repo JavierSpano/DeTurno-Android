@@ -1,5 +1,7 @@
 package com.javierfspano.deturno.ui.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,9 +31,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         View.OnClickListener, SearchView.OnCloseListener, SearchView.OnQueryTextListener {
 
     public static final String ID_TOKEN_EXTRA = "IdToken";
+    public static final String COORDINATES_EXTRA = "Coordinates";
+    public static final String ADDRESS_EXTRA = "Address";
+    public static final float DEFAULT_RADIUS = 0.6f;
+
     @Inject
     MainContract.Presenter presenter;
-    private float currentRadiusValue = 0.6f;
+    private float currentRadiusValue = DEFAULT_RADIUS;
     private GoogleMap map;
 
     @Override
@@ -39,12 +45,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         presenter.attachView(this);
-        presenter.onCreate(getIntent().getStringExtra(ID_TOKEN_EXTRA));
+        Intent intent = getIntent();
+        String idToken = intent.getStringExtra(ID_TOKEN_EXTRA);
+        LatLng coordinates = intent.getParcelableExtra(COORDINATES_EXTRA);
+        String address = intent.getStringExtra(ADDRESS_EXTRA);
+        presenter.onCreate(idToken, coordinates, address);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setupSlider();
         setSupportActionBar(findViewById(R.id.toolbar));
+
     }
 
     private void setupSlider() {
@@ -132,5 +143,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onQueryTextChange(String newText) {
         return true;
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

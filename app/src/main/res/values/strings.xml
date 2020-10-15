@@ -4,4 +4,10 @@
     <string name="app_label">DeTurno</string>
     <string name="search_hint">Ej: Cabildo 500</string>
     <string name="radius_label">Radio</string>
+    <string name="welcome_title">¡Bienvenid@!</string>
+    <string name="you_are_here">Usted esta aqui</string>
+    <string name="welcome_message">Ingresá tu ubicación para ver las farmacias de turno más cercanas ;)</string>
+    <string name="welcome_text_input_label">Podés ingresarla acá</string>
+    <string name="welcome_button_label">o sino</string>
+    <string name="welcome_button_text">usá tu ubicación actual</string>
 </resources>
