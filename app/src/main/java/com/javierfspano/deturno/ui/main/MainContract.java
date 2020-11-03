@@ -4,7 +4,10 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.javierfspano.deturno.data.Pharmacy;
 import com.javierfspano.deturno.ui.base.BaseContract;
+
+import java.util.List;
 
 public interface MainContract {
 
@@ -20,11 +23,11 @@ public interface MainContract {
         void hideLoading();
 
         void clearMapMarkers();
+
+        void updateList(List<Pharmacy> list);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-
-        void onMapReady();
 
         void onAddressSearch(String address, float radius);
 

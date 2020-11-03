@@ -10,4 +10,6 @@
     <string name="welcome_text_input_label">Podés ingresarla acá</string>
     <string name="welcome_button_label">o sino</string>
     <string name="welcome_button_text">usá tu ubicación actual</string>
+    <string name="tab_text_1">Lista</string>
+    <string name="tab_text_2">Mapa</string>
 </resources>

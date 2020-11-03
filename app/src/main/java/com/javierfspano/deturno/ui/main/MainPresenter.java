@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
 
-    private final LatLng defaultLocation = new LatLng(-34.603739, -58.38157);
     private GetPharmaciesByTextUseCase getPharmaciesByTextUseCase;
     private GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase;
     private String idToken;
@@ -26,10 +25,6 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     public MainPresenter(GetPharmaciesByTextUseCase getPharmaciesByTextUseCase, GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase) {
         this.getPharmaciesByTextUseCase = getPharmaciesByTextUseCase;
         this.getPharmaciesByCoordinatesUseCase = getPharmaciesByCoordinatesUseCase;
-    }
-
-    public void onMapReady() {
-        view.centerMap(defaultLocation);
     }
 
     private void fetchNearbyPharmacies(@Nullable String address, float radius) {
@@ -56,6 +51,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                                 .title(address)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                         );
+                        view.updateList(pharmacies);
                         view.centerMap(latLng);
                     }
                 }
@@ -109,6 +105,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     @Override
     public void onCreate(String idToken, @Nullable LatLng location, String address) {
         this.idToken = idToken;
+
 
         if (location != null) {
             fetchNearbyPharmacies(location);

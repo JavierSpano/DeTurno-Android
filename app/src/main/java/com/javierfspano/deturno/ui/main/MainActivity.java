@@ -12,22 +12,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.tabs.TabLayout;
 import com.javierfspano.deturno.R;
+import com.javierfspano.deturno.data.Pharmacy;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, MainContract.View,
+public class MainActivity extends AppCompatActivity implements MainContract.View,
         View.OnClickListener, SearchView.OnCloseListener, SearchView.OnQueryTextListener {
 
     public static final String ID_TOKEN_EXTRA = "IdToken";
@@ -37,8 +38,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Inject
     MainContract.Presenter presenter;
+
     private float currentRadiusValue = DEFAULT_RADIUS;
-    private GoogleMap map;
+
+    private SectionsPagerAdapter sectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +53,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng coordinates = intent.getParcelableExtra(COORDINATES_EXTRA);
         String address = intent.getStringExtra(ADDRESS_EXTRA);
         presenter.onCreate(idToken, coordinates, address);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
         setupSlider();
         setSupportActionBar(findViewById(R.id.toolbar));
+        setupTabs();
+    }
 
+    private void setupTabs() {
+        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabLayout);
+        tabs.setupWithViewPager(viewPager);
     }
 
     private void setupSlider() {
@@ -89,20 +97,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        presenter.onMapReady();
-    }
 
     @Override
     public void addMarker(MarkerOptions markerOptions) {
-        map.addMarker(markerOptions);
+        sectionsPagerAdapter.addMarker(markerOptions);
     }
 
     @Override
     public void centerMap(LatLng latLng) {
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15), 2300, null);
+        sectionsPagerAdapter.centerMap(latLng);
     }
 
     @Override
@@ -122,7 +125,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void clearMapMarkers() {
-        map.clear();
+        sectionsPagerAdapter.clearMapMarkers();
+    }
+
+    @Override
+    public void updateList(List<Pharmacy> list) {
+        sectionsPagerAdapter.updateList(list);
     }
 
     @Override
