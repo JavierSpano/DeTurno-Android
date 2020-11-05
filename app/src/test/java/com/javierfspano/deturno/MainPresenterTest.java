@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.javierfspano.deturno.data.Coordinates;
 import com.javierfspano.deturno.data.Pharmacy;
 import com.javierfspano.deturno.data.PharmacyServiceResponse;
+import com.javierfspano.deturno.domain.GetPharmaciesByCoordinatesUseCase;
 import com.javierfspano.deturno.domain.GetPharmaciesByTextUseCase;
 import com.javierfspano.deturno.ui.main.MainContract;
 import com.javierfspano.deturno.ui.main.MainPresenter;
@@ -33,6 +34,8 @@ public class MainPresenterTest {
 
     @Mock
     private PharmacyServiceResponse pharmacyServiceResponse;
+    @Mock
+    private GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase;
 
     @Mock
     private Pharmacy pharmacy;
@@ -48,7 +51,7 @@ public class MainPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mainPresenter = new MainPresenter(getPharmaciesByTextUseCase);
+        mainPresenter = new MainPresenter(getPharmaciesByTextUseCase, getPharmaciesByCoordinatesUseCase);
         mainPresenter.attachView(view);
 
     }

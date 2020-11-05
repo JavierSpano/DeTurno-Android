@@ -13,6 +13,7 @@ import com.javierfspano.deturno.domain.GetPharmaciesByCoordinatesUseCase;
 import com.javierfspano.deturno.domain.GetPharmaciesByTextUseCase;
 import com.javierfspano.deturno.ui.base.BasePresenter;
 import com.javierfspano.deturno.util.GenericServiceCallback;
+import com.javierfspano.deturno.util.PendingFetch;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     private GetPharmaciesByTextUseCase getPharmaciesByTextUseCase;
     private GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase;
     private String idToken;
+    private PendingFetch pendingFetch;
 
     public MainPresenter(GetPharmaciesByTextUseCase getPharmaciesByTextUseCase, GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase) {
         this.getPharmaciesByTextUseCase = getPharmaciesByTextUseCase;
@@ -106,19 +108,27 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     public void onCreate(String idToken, @Nullable LatLng location, String address) {
         this.idToken = idToken;
 
+        pendingFetch = () -> {
+            if (location != null) {
+                fetchNearbyPharmacies(location);
+            }
 
-        if (location != null) {
-            fetchNearbyPharmacies(location);
-        }
-
-        if (address != null) {
-            fetchNearbyPharmacies(address, MainActivity.DEFAULT_RADIUS);
-        }
+            if (address != null) {
+                fetchNearbyPharmacies(address, MainActivity.DEFAULT_RADIUS);
+            }
+        };
     }
 
     @Override
     public void onAddressSearch(String address, float radius) {
         view.clearMapMarkers();
         fetchNearbyPharmacies(address, radius);
+    }
+
+    @Override
+    public void onMapReady() {
+        if (pendingFetch != null) {
+            pendingFetch.fetch();
+        }
     }
 }

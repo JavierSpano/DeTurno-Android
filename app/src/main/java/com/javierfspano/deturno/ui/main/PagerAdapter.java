@@ -2,6 +2,7 @@ package com.javierfspano.deturno.ui.main;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -16,10 +17,11 @@ import com.javierfspano.deturno.ui.main.list.PharmacyListContract;
 import com.javierfspano.deturno.ui.main.list.PharmacyListFragment;
 import com.javierfspano.deturno.ui.main.map.PharmacyMapContract;
 import com.javierfspano.deturno.ui.main.map.PharmacyMapFragment;
+import com.javierfspano.deturno.util.MapReadyListener;
 
 import java.util.List;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
@@ -28,11 +30,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private PharmacyMapFragment mapFragment;
     private PharmacyListFragment listFragment;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public PagerAdapter(Context context, FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
@@ -45,7 +48,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         } else {
 
             if (mapFragment == null) {
-                mapFragment = PharmacyMapFragment.newInstance();
+                mapFragment = PharmacyMapFragment.newInstance((MapReadyListener) context);
             }
             return mapFragment;
         }
@@ -64,25 +67,25 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 
     public void addMarker(MarkerOptions markerOptions) {
-        if (mapFragment instanceof PharmacyMapContract.View) {
+        if (mapFragment != null) {
             ((PharmacyMapContract.View) mapFragment).addMarker(markerOptions);
         }
     }
 
     public void centerMap(LatLng latLng) {
-        if (mapFragment instanceof PharmacyMapContract.View) {
+        if (mapFragment != null) {
             ((PharmacyMapContract.View) mapFragment).centerMap(latLng);
         }
     }
 
     public void clearMapMarkers() {
-        if (mapFragment instanceof PharmacyMapContract.View) {
+        if (mapFragment != null) {
             ((PharmacyMapContract.View) mapFragment).clearMapMarkers();
         }
     }
 
     public void updateList(List<Pharmacy> list) {
-        if (listFragment instanceof PharmacyListContract.View) {
+        if (listFragment != null) {
             ((PharmacyListContract.View) listFragment).setList(list);
         }
     }

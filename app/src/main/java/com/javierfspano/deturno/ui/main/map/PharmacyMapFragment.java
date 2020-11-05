@@ -16,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.javierfspano.deturno.R;
+import com.javierfspano.deturno.util.MapReadyListener;
 
 import javax.inject.Inject;
 
@@ -29,12 +30,16 @@ public class PharmacyMapFragment extends Fragment implements PharmacyMapContract
 
     private GoogleMap map;
 
+    private MapReadyListener mapReadyListener;
+
     public PharmacyMapFragment() {
         // Required empty public constructor
     }
 
-    public static PharmacyMapFragment newInstance() {
-        return new PharmacyMapFragment();
+    public static PharmacyMapFragment newInstance(MapReadyListener mapReadyListener) {
+        PharmacyMapFragment pharmacyMapFragment = new PharmacyMapFragment();
+        pharmacyMapFragment.setMapReadyListener(mapReadyListener);
+        return pharmacyMapFragment;
     }
 
     @Override
@@ -66,20 +71,29 @@ public class PharmacyMapFragment extends Fragment implements PharmacyMapContract
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         presenter.onMapReady();
+        mapReadyListener.onMapReady();
     }
 
     @Override
     public void addMarker(MarkerOptions markerOptions) {
-        map.addMarker(markerOptions);
+        if (map != null) {
+            map.addMarker(markerOptions);
+        }
     }
 
     @Override
     public void centerMap(LatLng latLng) {
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15), 2300, null);
+        if (map != null) {
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15), 2300, null);
+        }
     }
 
     @Override
     public void clearMapMarkers() {
         map.clear();
+    }
+
+    public void setMapReadyListener(MapReadyListener mapReadyListener) {
+        this.mapReadyListener = mapReadyListener;
     }
 }

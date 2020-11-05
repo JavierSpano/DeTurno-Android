@@ -12,14 +12,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
 import com.javierfspano.deturno.R;
 import com.javierfspano.deturno.data.Pharmacy;
+import com.javierfspano.deturno.util.MapReadyListener;
 
 import java.util.List;
 
@@ -29,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements MainContract.View,
-        View.OnClickListener, SearchView.OnCloseListener, SearchView.OnQueryTextListener {
+        View.OnClickListener, SearchView.OnCloseListener, SearchView.OnQueryTextListener, MapReadyListener {
 
     public static final String ID_TOKEN_EXTRA = "IdToken";
     public static final String COORDINATES_EXTRA = "Coordinates";
@@ -41,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private float currentRadiusValue = DEFAULT_RADIUS;
 
-    private SectionsPagerAdapter sectionsPagerAdapter;
+    private PagerAdapter pagerAdapter;
+
+    private ConstraintLayout sliderLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +65,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void setupTabs() {
-        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.setAdapter(pagerAdapter);
         TabLayout tabs = findViewById(R.id.tabLayout);
         tabs.setupWithViewPager(viewPager);
     }
 
     private void setupSlider() {
+        sliderLayout = findViewById(R.id.slider_layout);
         Slider slider = findViewById(R.id.slider);
         TextView radiusValueLabel = findViewById(R.id.radiusValue);
         radiusValueLabel.setText(currentRadiusValue + "km");
@@ -100,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void addMarker(MarkerOptions markerOptions) {
-        sectionsPagerAdapter.addMarker(markerOptions);
+        pagerAdapter.addMarker(markerOptions);
     }
 
     @Override
     public void centerMap(LatLng latLng) {
-        sectionsPagerAdapter.centerMap(latLng);
+        pagerAdapter.centerMap(latLng);
     }
 
     @Override
@@ -125,20 +132,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void clearMapMarkers() {
-        sectionsPagerAdapter.clearMapMarkers();
+        pagerAdapter.clearMapMarkers();
     }
 
     @Override
     public void updateList(List<Pharmacy> list) {
-        sectionsPagerAdapter.updateList(list);
+        pagerAdapter.updateList(list);
     }
 
     @Override
     public void onClick(View v) {
+        if (sliderLayout != null){
+            sliderLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public boolean onClose() {
+        if (sliderLayout != null){
+            sliderLayout.setVisibility(View.GONE);
+        }
         return false;
     }
 
@@ -156,5 +169,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void onMapReady() {
+        presenter.onMapReady();
     }
 }

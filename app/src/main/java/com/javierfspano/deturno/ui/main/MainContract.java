@@ -32,5 +32,7 @@ public interface MainContract {
         void onAddressSearch(String address, float radius);
 
         void onCreate(String stringExtra, @Nullable LatLng coordinates, String address);
+
+        void onMapReady();
     }
 }
