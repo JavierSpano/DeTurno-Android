@@ -91,6 +91,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                                 .title(view.getContext().getString(R.string.you_are_here))
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                         );
+                        view.updateList(pharmacies);
                         view.centerMap(latLng);
                     }
                 }
