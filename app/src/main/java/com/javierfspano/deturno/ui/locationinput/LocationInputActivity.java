@@ -43,6 +43,12 @@ public class LocationInputActivity extends AppCompatActivity implements Location
         setupViews();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        hideLoading();
+    }
+
     private void setupViews() {
         final MaterialButton useMyLocationButton = findViewById(R.id.use_my_location_button);
         useMyLocationButton.setOnClickListener(v -> presenter.onUseMyLocationClick());
@@ -76,7 +82,6 @@ public class LocationInputActivity extends AppCompatActivity implements Location
     private void goToNextActivity(String idToken, Intent intent) {
         intent.putExtra(MainActivity.ID_TOKEN_EXTRA, idToken);
         startActivity(intent);
-        hideLoading();
     }
 
     @Override

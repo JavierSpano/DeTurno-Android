@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/welcome_title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/welcome_message_text_view"
@@ -34,7 +35,8 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/welcome_message"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/welcome_location_text_input_label"
@@ -53,7 +55,8 @@
                 android:layout_marginTop="8dp"
                 app:endIconCheckable="false"
                 app:endIconDrawable="@drawable/ic_search"
-                app:endIconMode="custom">
+                app:endIconMode="custom"
+                app:hintTextColor="@android:color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -77,7 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/welcome_button_text" />
+                android:text="@string/welcome_button_text"
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>
 

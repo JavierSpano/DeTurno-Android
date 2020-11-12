@@ -20,9 +20,9 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Slider</item>
     </style>
     <style name="ThemeOverlay.App.Slider" parent="">
-        <item name="colorPrimary">#111</item>
+        <item name="colorPrimary">#FAFAFA</item>
         <item name="colorOnPrimary">@color/colorPrimaryDark</item>
-        <item name="colorOnSurface">#111</item>
+        <item name="colorOnSurface">#FFF</item>
     </style>
 
 </resources>

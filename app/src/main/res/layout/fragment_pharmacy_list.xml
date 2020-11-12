@@ -11,5 +11,4 @@
     android:clipToPadding="false"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.main.list.PharmacyListFragment"
-    tools:listitem="@layout/fragment_pharmacy_list_item"
-    android:background="@drawable/bg_color"/>
+    tools:listitem="@layout/fragment_pharmacy_list_item"/>

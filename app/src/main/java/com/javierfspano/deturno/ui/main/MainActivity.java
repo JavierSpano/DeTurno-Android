@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -143,14 +149,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void onClick(View v) {
         if (sliderLayout != null){
-            sliderLayout.setVisibility(View.VISIBLE);
+            sliderLayout.setAlpha(0);
+            sliderLayout.animate()
+                    .translationY(sliderLayout.getHeight())
+                    .setInterpolator(new FastOutSlowInInterpolator())
+                    .alpha(1)
+                    .setDuration(300);
         }
     }
 
     @Override
     public boolean onClose() {
         if (sliderLayout != null){
-            sliderLayout.setVisibility(View.GONE);
+            sliderLayout.setAlpha(1);
+            sliderLayout.animate()
+                    .translationY(-sliderLayout.getHeight())
+                    .setInterpolator(new FastOutSlowInInterpolator())
+                    .alpha(0)
+                    .setDuration(300);
         }
         return false;
     }

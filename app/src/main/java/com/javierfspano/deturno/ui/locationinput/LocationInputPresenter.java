@@ -42,7 +42,6 @@ public class LocationInputPresenter extends BasePresenter<LocationInputContract.
 
     @Override
     public void onLocationSuccess(Location location) {
-        view.hideLoading();
         if (location != null) {
             view.goToNextActivity(
                     idToken,
