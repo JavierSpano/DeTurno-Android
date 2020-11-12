@@ -19,7 +19,7 @@
             tools:context=".ui.locationinput.LocationInputActivity">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/welcome_title_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -27,6 +27,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
             <TextView
+                android:id="@+id/welcome_message_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -35,6 +36,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
+                android:id="@+id/welcome_location_text_input_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
@@ -61,7 +63,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/welcome_location_button_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
