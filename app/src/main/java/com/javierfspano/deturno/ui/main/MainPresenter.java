@@ -1,10 +1,13 @@
 package com.javierfspano.deturno.ui.main;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.javierfspano.deturno.R;
 import com.javierfspano.deturno.data.Coordinates;
 import com.javierfspano.deturno.data.Pharmacy;
@@ -23,6 +26,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     private GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase;
     private String idToken;
     private PendingFetch pendingFetch;
+    private FirebaseAnalytics firebaseAnalytics;
 
     public MainPresenter(GetPharmaciesByTextUseCase getPharmaciesByTextUseCase, GetPharmaciesByCoordinatesUseCase getPharmaciesByCoordinatesUseCase) {
         this.getPharmaciesByTextUseCase = getPharmaciesByTextUseCase;
@@ -35,6 +39,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
             @Override
             public void onSuccess(PharmacyServiceResponse pharmacyServiceResponse) {
+                firebaseAnalytics.logEvent("main_pharmacy_list_by_text_success", null);
                 view.hideLoading();
                 if (pharmacyServiceResponse != null) {
                     final List<Pharmacy> pharmacies = pharmacyServiceResponse.getPharmacies();
@@ -73,6 +78,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
             @Override
             public void onSuccess(PharmacyServiceResponse pharmacyServiceResponse) {
+                firebaseAnalytics.logEvent("main_pharmacy_list_by_latlng_success", null);
+
                 view.hideLoading();
                 if (pharmacyServiceResponse != null) {
                     final List<Pharmacy> pharmacies = pharmacyServiceResponse.getPharmacies();
@@ -106,8 +113,10 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     }
 
     @Override
-    public void onCreate(String idToken, @Nullable LatLng location, String address) {
+    public void onCreate(String idToken, @Nullable LatLng location, String address, Context context) {
         this.idToken = idToken;
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        firebaseAnalytics.logEvent("main_view", null);
 
         pendingFetch = () -> {
             if (location != null) {

@@ -12,4 +12,6 @@
     <string name="welcome_button_text">usá tu ubicación actual</string>
     <string name="tab_text_1">Lista</string>
     <string name="tab_text_2">Mapa</string>
+    <string name="list_tab_title">LISTA</string>
+    <string name="map_tab_title">MAPA</string>
 </resources>

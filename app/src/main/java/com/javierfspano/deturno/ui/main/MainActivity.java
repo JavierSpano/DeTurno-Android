@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         String idToken = intent.getStringExtra(ID_TOKEN_EXTRA);
         LatLng coordinates = intent.getParcelableExtra(COORDINATES_EXTRA);
         String address = intent.getStringExtra(ADDRESS_EXTRA);
-        presenter.onCreate(idToken, coordinates, address);
+        presenter.onCreate(idToken, coordinates, address,this);
         setupSlider();
         setSupportActionBar(findViewById(R.id.toolbar));
         setupTabs();

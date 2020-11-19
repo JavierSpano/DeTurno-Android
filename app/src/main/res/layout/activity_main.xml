@@ -90,12 +90,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lista" />
+            android:text="@string/list_tab_title" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mapa" />
+            android:text="@string/map_tab_title" />
 
     </com.google.android.material.tabs.TabLayout>
 

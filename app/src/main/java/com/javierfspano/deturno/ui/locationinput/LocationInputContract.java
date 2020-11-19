@@ -1,6 +1,7 @@
 package com.javierfspano.deturno.ui.locationinput;
 
 import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -41,6 +42,6 @@ public interface LocationInputContract {
 
         void onLocationError();
 
-        void onCreate(String idToken);
+        void onCreate(String idToken, Context context);
     }
 }

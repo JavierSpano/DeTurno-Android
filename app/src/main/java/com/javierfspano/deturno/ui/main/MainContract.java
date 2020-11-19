@@ -1,5 +1,7 @@
 package com.javierfspano.deturno.ui.main;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -31,7 +33,7 @@ public interface MainContract {
 
         void onAddressSearch(String address, float radius);
 
-        void onCreate(String stringExtra, @Nullable LatLng coordinates, String address);
+        void onCreate(String stringExtra, @Nullable LatLng coordinates, String address, Context context);
 
         void onMapReady();
     }

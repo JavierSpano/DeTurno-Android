@@ -39,7 +39,7 @@ public class LocationInputActivity extends AppCompatActivity implements Location
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_input);
         presenter.attachView(this);
-        presenter.onCreate(getIntent().getStringExtra(MainActivity.ID_TOKEN_EXTRA));
+        presenter.onCreate(getIntent().getStringExtra(MainActivity.ID_TOKEN_EXTRA),this);
         setupViews();
     }
 
