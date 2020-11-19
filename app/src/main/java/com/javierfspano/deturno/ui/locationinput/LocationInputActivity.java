@@ -19,6 +19,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.javierfspano.deturno.R;
 import com.javierfspano.deturno.ui.main.MainActivity;
 
@@ -47,6 +48,15 @@ public class LocationInputActivity extends AppCompatActivity implements Location
     protected void onStart() {
         super.onStart();
         hideLoading();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "location_input");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, LocationInputActivity.class.getName());
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
     }
 
     private void setupViews() {

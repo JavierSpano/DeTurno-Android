@@ -27,8 +27,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.javierfspano.deturno.R;
 import com.javierfspano.deturno.data.Pharmacy;
+import com.javierfspano.deturno.ui.locationinput.LocationInputActivity;
 import com.javierfspano.deturno.util.MapReadyListener;
 
 import java.util.List;
@@ -70,6 +72,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setupTabs();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "main");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, MainActivity.class.getName());
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+    }
     private void setupTabs() {
         pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);

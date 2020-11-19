@@ -8,7 +8,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.javierfspano.deturno.R;
+import com.javierfspano.deturno.ui.locationinput.LocationInputActivity;
 import com.javierfspano.deturno.ui.main.MainActivity;
 
 import javax.inject.Inject;
@@ -27,6 +29,15 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         setContentView(R.layout.activity_splash_screen);
         presenter.attachView(this);
         presenter.onCreate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "splash_screen");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, SplashScreenActivity.class.getName());
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
     }
 
     public void goToNextActivity(String idToken, Class<? extends Activity> activity) {
